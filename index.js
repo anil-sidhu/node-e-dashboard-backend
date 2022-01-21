@@ -27,12 +27,21 @@ app.post("/login", async (req, resp) => {
     } else {
         resp.send({ result: "No User found" })
     }
-})
+});
 
 app.post("/add-product", async (req, resp) => {
     let product = new Product(req.body);
     let result = await product.save();
     resp.send(result);
+});
+
+app.get("/products", async (req, resp) => {
+    const products = await Product.find();
+    if (products.length > 0) {
+        resp.send(products)
+    } else {
+        resp.send({ result: "No Product found" })
+    }
 })
 
 app.listen(5000);
